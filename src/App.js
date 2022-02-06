@@ -1,4 +1,5 @@
-import Home from './Components/Home'
+import Navbar from './Components/Navbar'
+import InputBox from './Components/InputBox'
 import { Layout } from 'antd'
 const { Header, Footer, Sider, Content } = Layout
 
@@ -8,7 +9,9 @@ function App() {
       <Header>
         <Navbar />
       </Header>
-      <Content>Content</Content>
+      <Content>
+        <InputBox />
+      </Content>
       <Footer>Footer</Footer>
     </Layout>
   )
