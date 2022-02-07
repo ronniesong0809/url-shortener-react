@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import InputBox from './Components/InputBox'
 import RecordList from './Components/RecordList'
@@ -11,8 +12,12 @@ function App() {
         <Navbar />
       </Header>
       <Content>
-        <InputBox />
-        <RecordList />
+        <Router>
+          <Routes>
+            <Route path='/' element={<InputBox />} />
+            <Route path='/all' element={<RecordList />} />
+          </Routes>
+        </Router>
       </Content>
       <Footer>Footer</Footer>
     </Layout>
