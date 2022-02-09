@@ -1,6 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { getAllRecord } from '../Apis/getAllRecord'
-import { Table } from 'antd'
+import { Row, Space, Table } from 'antd'
+import DayJS from 'react-dayjs'
 
 const { useState, useEffect } = React
 
@@ -14,17 +16,22 @@ function RecordList() {
   const fetchData = async () => {
     await getAllRecord().then((res) => {
       setRecords(res.data)
+      console.log(res.data)
     })
   }
 
   const columns = [
     {
+      title: 'Key',
+      dataIndex: 'shortKey',
+      key: 'shortKey',
+      render: (text, row, index) => <Link to={'/' + text}>{text}</Link>
+    },
+    {
       title: 'Shortened URL',
       dataIndex: 'shortUrl',
       key: 'shortUrl',
-      render: (text, row, index) => (
-        <a href={process.env.REACT_APP_BASEURL + '/' + text}>{text}</a>
-      )
+      render: (text, row, index) => <a href={text}>{text}</a>
     },
     {
       title: 'Origin URL',
@@ -32,22 +39,42 @@ function RecordList() {
       key: 'longUrl'
     },
     {
-      title: 'Timestamp',
-      dataIndex: 'timestamp',
-      key: 'timestamp'
+      title: 'Created Date',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (text, row, index) => (
+        <DayJS format='H:mm A M/D/YYYY'>{text}</DayJS>
+      )
+    },
+    {
+      title: 'Updated Date',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      render: (text, row, index) => (
+        <DayJS format='H:mm A M/D/YYYY'>{text}</DayJS>
+      )
     }
   ]
 
   return (
     <>
-      {records && (
-        <Table
-          columns={columns}
-          dataSource={records}
-          rowKey='_id'
-          pagination={{ pageSize: 10 }}
-        />
-      )}
+      <Space direction='vertical' size='large' />
+      <Row type='flex' justify='center' style={{ minHeight: '80vh' }}>
+        {records && (
+          <>
+          <Space direction='vertical' size='large' />
+          <Space direction='vertical' size='large' />
+          <br />
+          <Table
+            columns={columns}
+            dataSource={records}
+            rowKey='_id'
+            pagination={{ pageSize: 10 }}
+            style={{ width: '90%' }}
+          />
+          </>
+        )}
+      </Row>
     </>
   )
 }

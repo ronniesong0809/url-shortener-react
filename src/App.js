@@ -7,20 +7,20 @@ const { Header, Footer, Sider, Content } = Layout
 
 function App() {
   return (
-    <Layout>
-      <Header>
-        <Navbar />
-      </Header>
-      <Content>
-        <Router>
+    <Router>
+      <Layout style={{ minHeight: '100vh' }}>
+        <Header>
+          <Navbar />
+        </Header>
+        <Content style={{ margin: '50pt' }}>
           <Routes>
             <Route path='/' element={<InputBox />} />
             <Route path='/all' element={<RecordList />} />
           </Routes>
-        </Router>
-      </Content>
-      <Footer>Footer</Footer>
-    </Layout>
+        </Content>
+        <Footer>Footer</Footer>
+      </Layout>
+    </Router>
   )
 }
 

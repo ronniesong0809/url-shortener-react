@@ -1,5 +1,6 @@
 import React from 'react'
 import { Menu } from 'antd'
+import { Link } from 'react-router-dom'
 import {
   HomeOutlined,
   UnorderedListOutlined,
@@ -12,7 +13,6 @@ class Navbar extends React.Component {
   }
 
   handleClick = (e) => {
-    console.log('click ', e)
     this.setState({ current: e.key })
   }
 
@@ -26,13 +26,13 @@ class Navbar extends React.Component {
         mode='horizontal'
       >
         <Menu.Item key='home' icon={<HomeOutlined />}>
-          Home
+          <Link to='/'>Home</Link>
         </Menu.Item>
         <Menu.Item key='list' icon={<UnorderedListOutlined />}>
-          List
+          <Link to='/all'>List</Link>
         </Menu.Item>
         <Menu.Item key='about' icon={<QuestionCircleOutlined />}>
-          About
+          <Link to='/about'>About</Link>
         </Menu.Item>
       </Menu>
     )

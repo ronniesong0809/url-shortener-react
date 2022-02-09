@@ -30,7 +30,7 @@ function InputBox() {
         type='flex'
         justify='center'
         align='middle'
-        style={{ minHeight: '80vh' }}
+        style={{ margin: '20vh' }}
       >
         <Form
           form={form}
@@ -38,6 +38,7 @@ function InputBox() {
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete='off'
+          style={{ width: '90vh'}}
         >
           <Form.Item
             name='url'
