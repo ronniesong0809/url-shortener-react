@@ -8,15 +8,17 @@ import {
   Button,
   Radio,
   Drawer,
-  Typography
+  Typography,
+  Result
 } from 'antd'
-import { GlobalOutlined, SendOutlined } from '@ant-design/icons'
+import { SendOutlined } from '@ant-design/icons'
 import { postLongUrl } from '../Apis/postLongUrl'
-const { Title, Paragraph } = Typography
+const { Paragraph } = Typography
 
 function InputBox() {
   const [form] = Form.useForm()
-  const [data, setData] = useState([])
+  const [shorten, setShorten] = useState([])
+  const [formData, setFormData] = useState([])
   const [visible, setVisible] = useState(false)
 
   const showDrawer = () => {
@@ -34,7 +36,7 @@ function InputBox() {
   })
 
   const onFinish = (data) => {
-    console.log(data)
+    setFormData(data)
     postLongUrl(data.url)
       .catch(function (err) {
         message.error(err.message, 10)
@@ -45,7 +47,7 @@ function InputBox() {
         }
 
         if (response.data) {
-          setData(response.data)
+          setShorten(response.data)
           showDrawer()
           message.success(`Submit success! ${response.data.message}`)
         }
@@ -66,35 +68,40 @@ function InputBox() {
   return (
     <>
       <Drawer
-        title='Short URL Generated'
         placement='bottom'
+        closable={false}
         onClose={onClose}
         visible={visible}
       >
-        <Row type='flex' justify='center' style={{ padding: '40px' }}>
-          <Typography>
-            {data && (
-              <>
-                <Paragraph>
-                  {data.message && <blockquote>{data.message}</blockquote>}
-                </Paragraph>
-                <Title level={3} copyable>
-                  <a href={data.url}>
-                    <Space>
-                      <GlobalOutlined />
-                      {data.url}
-                    </Space>
-                  </a>
-                </Title>
-                <Paragraph>
-                  <Button icon={<SendOutlined />} href={data.url}>
+        <Typography>
+          {shorten && (
+            <>
+              <Result
+                status={shorten.message ? 'info' : 'success'}
+                title={
+                  shorten.message
+                    ? shorten.message
+                    : 'Successfully Generated Short URL!'
+                }
+                subTitle={formData.url}
+                extra={[
+                  <Paragraph copyable>{shorten.url}</Paragraph>,
+                  <Button
+                    key='visit'
+                    icon={<SendOutlined />}
+                    className='App-link'
+                    href={shorten.url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
                     Visit URL
                   </Button>
-                </Paragraph>
-              </>
-            )}
-          </Typography>
-        </Row>
+                ]}
+                style={{padding: '20px'}}
+              />
+            </>
+          )}
+        </Typography>
       </Drawer>
 
       <Row
@@ -132,9 +139,9 @@ function InputBox() {
           </Form.Item>
           <Form.Item name='expiration' label='Expire time?'>
             <Radio.Group>
-              <Radio.Button value={0}>forever</Radio.Button>
-              <Radio.Button value={1}>a day</Radio.Button>
-              <Radio.Button value={7}>a week</Radio.Button>
+              <Radio value={0}>forever</Radio>
+              <Radio value={1}>a day</Radio>
+              <Radio value={7}>a week</Radio>
             </Radio.Group>
           </Form.Item>
           <Form.Item>

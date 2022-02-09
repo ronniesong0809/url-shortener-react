@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { getAllRecord } from '../Apis/getAllRecord'
-import { Row, Space, Table, message } from 'antd'
+import { Row, Table, message } from 'antd'
 import DayJS from 'react-dayjs'
 
 const { useState, useEffect } = React
@@ -73,15 +73,11 @@ function RecordList() {
       <Row type='flex' justify='center'>
         {records && (
           <>
-            <Space direction='vertical' size='large' />
-            <Space direction='vertical' size='large' />
-            <br />
             <Table
               columns={columns}
               dataSource={records}
               rowKey='_id'
               pagination={{ pageSize: 10 }}
-              style={{ width: '90%' }}
             />
           </>
         )}

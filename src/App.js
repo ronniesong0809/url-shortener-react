@@ -5,16 +5,16 @@ import RecordList from './Components/RecordList'
 import UrlStats from './Components/UrlStats'
 import AboutPage from './Components/AboutPage'
 import { Layout } from 'antd'
-const { Header, Footer, Sider, Content } = Layout
+const { Header, Footer, Content } = Layout
 
 function App() {
   return (
     <Router>
-      <Layout style={{ minHeight: '100vh' }}>
+      <Layout style={{ minHeight: '100vh', background: '#fff'}}>
         <Header>
           <Navbar />
         </Header>
-        <Content style={{ padding: '50px' }}>
+        <Content style={{ marginTop: '50px' }}>
           <Routes>
             <Route path='/' element={<InputBox />} />
             <Route path='/all' element={<RecordList />} />

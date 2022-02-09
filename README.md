@@ -10,7 +10,7 @@ An internal service for shortening URLs that keep track of quickly referenced in
 
 - Frontend: [Live demo](https://url.ronsong.live/), [repository](https://github.com/ronniesong0809/url-shortener-react)
 
-- Backend: [Live demo](http://shorturl.ronsong.live/all), [repository](https://github.com/ronniesong0809/url-shortener)
+- Backend: [Live demo](https://shorturl.ronsong.live/all), [repository](https://github.com/ronniesong0809/url-shortener)
 
 ## Requirements and Features
 
