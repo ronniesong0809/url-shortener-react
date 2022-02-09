@@ -1,9 +1,31 @@
-import React, { useEffect } from 'react'
-import { Row, Input, message, Form, Space, Button, Radio } from 'antd'
+import React, { useState, useEffect } from 'react'
+import {
+  Row,
+  Input,
+  message,
+  Form,
+  Space,
+  Button,
+  Radio,
+  Drawer,
+  Typography
+} from 'antd'
+import { GlobalOutlined, SendOutlined } from '@ant-design/icons'
 import { postLongUrl } from '../Apis/postLongUrl'
+const { Title, Paragraph } = Typography
 
 function InputBox() {
   const [form] = Form.useForm()
+  const [data, setData] = useState([])
+  const [visible, setVisible] = useState(false)
+
+  const showDrawer = () => {
+    setVisible(true)
+  }
+
+  const onClose = () => {
+    setVisible(false)
+  }
 
   useEffect(() => {
     form.setFieldsValue({
@@ -21,7 +43,12 @@ function InputBox() {
         if (response.status !== 200) {
           message.error(`${response.data.err}`)
         }
-        message.success(`Submit success! ${response.data.message}`)
+
+        if (response.data) {
+          setData(response.data)
+          showDrawer()
+          message.success(`Submit success! ${response.data.message}`)
+        }
       })
   }
 
@@ -38,6 +65,38 @@ function InputBox() {
 
   return (
     <>
+      <Drawer
+        title='Short URL Generated'
+        placement='bottom'
+        onClose={onClose}
+        visible={visible}
+      >
+        <Row type='flex' justify='center' style={{ padding: '40px' }}>
+          <Typography>
+            {data && (
+              <>
+                <Paragraph>
+                  {data.message && <blockquote>{data.message}</blockquote>}
+                </Paragraph>
+                <Title level={3} copyable>
+                  <a href={data.url}>
+                    <Space>
+                      <GlobalOutlined />
+                      {data.url}
+                    </Space>
+                  </a>
+                </Title>
+                <Paragraph>
+                  <Button icon={<SendOutlined />} href={data.url}>
+                    Visit URL
+                  </Button>
+                </Paragraph>
+              </>
+            )}
+          </Typography>
+        </Row>
+      </Drawer>
+
       <Row
         type='flex'
         justify='center'
