@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+## Url Shortener Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Web](https://img.shields.io/badge/Frondend-deployed-green)](https://url.ronsong.live/all)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ronniesong0809/url-shortener-react/blob/master/LICENSE)
 
-## Available Scripts
+Copyright (c) 2022 Ronnie Song
 
-In the project directory, you can run:
+An internal service for shortening URLs that keep track of quickly referenced internal tools, wiki pages, and external resources
 
-### `npm start`
+- Frontend: [Live demo](https://url.ronsong.live/), [repository](https://github.com/ronniesong0809/url-shortener-react)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Backend: [Live demo](http://shorturl.ronsong.live/all), [repository](https://github.com/ronniesong0809/url-shortener)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Requirements and Features
 
-### `npm test`
+- Design RESTful API with analytics of usage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Short links are randomly generated, no duplicate URLs are allowed to be created
 
-### `npm run build`
+- Short links can expire at a future time, or can live forever (TTL)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Short links can be deleted, if a short link is created that was once deleted, it will have no "knowledge" of its previous version
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Tech Stack and Tools
+React, React-router-dom, Axios, Ant Design UI, Dayjs, and more
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Backend Repository
 
-### `npm run eject`
+To check the API backend repository, go to [github.com/ronniesong0809/url-shortener](https://github.com/ronniesong0809/url-shortener)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## API Documentation
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To check the API documentation which is automatically generated using express-oas-generator, go to [shorturl.ronsong.live/api/docs](https://shorturl.ronsong.live/api/docs/v3/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Fork/clone this repo, then download and install packages/dependencies
 
-## Learn More
+```
+$ git clone git@github.com:ronniesong0809/url-shortener-react.git
+$ cd url-shortener
+$ npm install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Copy the `.env.example` to `.env`, and replace any entries in `.env` with your own values
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Start the server by running `npm start`. or `npm build` for production
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+This program is licensed under the "MIT License". Please see the file LICENSE in the source distribution of this software for license terms.
