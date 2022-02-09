@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { getAllRecord } from '../Apis/getAllRecord'
-import { Row, Space, Table } from 'antd'
+import { Row, Space, Table, message } from 'antd'
 import DayJS from 'react-dayjs'
 
 const { useState, useEffect } = React
@@ -14,10 +14,13 @@ function RecordList() {
   }, [])
 
   const fetchData = async () => {
-    await getAllRecord().then((res) => {
-      setRecords(res.data)
-      console.log(res.data)
-    })
+    await getAllRecord()
+      .catch(function (err) {
+        message.error(err.message, 10)
+      })
+      .then((res) => {
+        setRecords(res.data)
+      })
   }
 
   const columns = [
@@ -31,7 +34,16 @@ function RecordList() {
       title: 'Shortened URL',
       dataIndex: 'shortUrl',
       key: 'shortUrl',
-      render: (text, row, index) => <a href={text}>{text}</a>
+      render: (text, row, index) => (
+        <a
+          className='App-link'
+          href={text}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          {text}
+        </a>
+      )
     },
     {
       title: 'Origin URL',
@@ -62,16 +74,16 @@ function RecordList() {
       <Row type='flex' justify='center' style={{ minHeight: '80vh' }}>
         {records && (
           <>
-          <Space direction='vertical' size='large' />
-          <Space direction='vertical' size='large' />
-          <br />
-          <Table
-            columns={columns}
-            dataSource={records}
-            rowKey='_id'
-            pagination={{ pageSize: 10 }}
-            style={{ width: '90%' }}
-          />
+            <Space direction='vertical' size='large' />
+            <Space direction='vertical' size='large' />
+            <br />
+            <Table
+              columns={columns}
+              dataSource={records}
+              rowKey='_id'
+              pagination={{ pageSize: 10 }}
+              style={{ width: '90%' }}
+            />
           </>
         )}
       </Row>

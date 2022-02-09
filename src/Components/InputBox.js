@@ -6,12 +6,16 @@ function InputBox() {
   const [form] = Form.useForm()
 
   const onFinish = (data) => {
-    postLongUrl(data.url).then((response) => {
-      if (response.status !== 200) {
-        message.error(`${response.data.err}`)
-      }
-      message.success(`Submit success! ${response.data.message}`)
-    })
+    postLongUrl(data.url)
+      .catch(function (err) {
+        message.error(err.message, 10)
+      })
+      .then((response) => {
+        if (response.status !== 200) {
+          message.error(`${response.data.err}`)
+        }
+        message.success(`Submit success! ${response.data.message}`)
+      })
   }
 
   const onFinishFailed = () => {
@@ -38,7 +42,7 @@ function InputBox() {
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete='off'
-          style={{ width: '90vh'}}
+          style={{ width: '90vh' }}
         >
           <Form.Item
             name='url'
