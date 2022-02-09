@@ -22,7 +22,9 @@ function App() {
             <Route path='/:shortKey' element={<UrlStats />} />
           </Routes>
         </Content>
-        <Footer>Footer</Footer>
+        <Footer style={{ textAlign: 'center' }}>
+          URL Shortener ©2022 Created by Ronnie Song
+        </Footer>
       </Layout>
     </Router>
   )
