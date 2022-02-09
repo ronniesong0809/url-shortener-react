@@ -1,11 +1,18 @@
-import React from 'react'
-import { Row, Input, message, Form, Space, Button } from 'antd'
+import React, { useEffect } from 'react'
+import { Row, Input, message, Form, Space, Button, Radio } from 'antd'
 import { postLongUrl } from '../Apis/postLongUrl'
 
 function InputBox() {
   const [form] = Form.useForm()
 
+  useEffect(() => {
+    form.setFieldsValue({
+      expiration: 0
+    })
+  })
+
   const onFinish = (data) => {
+    console.log(data)
     postLongUrl(data.url)
       .catch(function (err) {
         message.error(err.message, 10)
@@ -24,7 +31,8 @@ function InputBox() {
 
   const onReset = () => {
     form.setFieldsValue({
-      url: ''
+      url: '',
+      expiration: 0
     })
   }
 
@@ -61,7 +69,14 @@ function InputBox() {
               }
             ]}
           >
-            <Input placeholder='www.google.com' />
+            <Input placeholder='https://github.com/ronniesong0809/url-shortener-react' />
+          </Form.Item>
+          <Form.Item name='expiration' label='Expire time?'>
+            <Radio.Group>
+              <Radio.Button value={0}>forever</Radio.Button>
+              <Radio.Button value={1}>a day</Radio.Button>
+              <Radio.Button value={7}>a week</Radio.Button>
+            </Radio.Group>
           </Form.Item>
           <Form.Item>
             <Space>
