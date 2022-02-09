@@ -3,6 +3,7 @@ import Navbar from './Components/Navbar'
 import InputBox from './Components/InputBox'
 import RecordList from './Components/RecordList'
 import UrlStats from './Components/UrlStats'
+import AboutPage from './Components/AboutPage'
 import { Layout } from 'antd'
 const { Header, Footer, Sider, Content } = Layout
 
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path='/' element={<InputBox />} />
             <Route path='/all' element={<RecordList />} />
+            <Route path='/about' element={<AboutPage />} />
             <Route path='/:shortKey' element={<UrlStats />} />
           </Routes>
         </Content>
