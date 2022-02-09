@@ -85,7 +85,9 @@ function InputBox() {
                 }
                 subTitle={formData.url}
                 extra={[
-                  <Paragraph copyable>{shorten.url}</Paragraph>,
+                  <Paragraph key='copy' copyable>
+                    {shorten.url}
+                  </Paragraph>,
                   <Button
                     key='visit'
                     icon={<SendOutlined />}
@@ -97,7 +99,7 @@ function InputBox() {
                     Visit URL
                   </Button>
                 ]}
-                style={{padding: '20px'}}
+                style={{ padding: '20px' }}
               />
             </>
           )}
