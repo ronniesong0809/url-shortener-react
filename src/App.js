@@ -13,7 +13,7 @@ function App() {
         <Header>
           <Navbar />
         </Header>
-        <Content style={{ margin: '50pt' }}>
+        <Content style={{ padding: '50px' }}>
           <Routes>
             <Route path='/' element={<InputBox />} />
             <Route path='/all' element={<RecordList />} />

@@ -70,8 +70,7 @@ function RecordList() {
 
   return (
     <>
-      <Space direction='vertical' size='large' />
-      <Row type='flex' justify='center' style={{ minHeight: '80vh' }}>
+      <Row type='flex' justify='center'>
         {records && (
           <>
             <Space direction='vertical' size='large' />
