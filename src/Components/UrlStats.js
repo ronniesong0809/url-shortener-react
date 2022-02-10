@@ -121,6 +121,9 @@ function UrlStats() {
               <Descriptions.Item label='Last Clicked IP' span={2}>
                 {stats.ip}
               </Descriptions.Item>
+              <Descriptions.Item label='Last Clicked User-Agent' span={2}>
+                {stats.userAgent}
+              </Descriptions.Item>
               <Descriptions.Item>
                 <Popconfirm
                   title='Are you sure you want to delete?'

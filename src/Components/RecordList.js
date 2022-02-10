@@ -2,8 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Table, message, Tooltip, Statistic, Typography } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
-import dayjs from 'dayjs'
 import { getAllRecord } from '../Apis/getAllRecord'
+import dayjs from 'dayjs'
+const relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
 
 const { Countdown } = Statistic
 const { useState, useEffect } = React
