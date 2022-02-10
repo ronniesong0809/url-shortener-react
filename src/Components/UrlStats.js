@@ -10,11 +10,9 @@ import {
   Popconfirm
 } from 'antd'
 import { WarningOutlined, DeleteOutlined } from '@ant-design/icons'
+import dayjs from 'dayjs'
 import { getUrlStats } from '../Apis/getUrlStats'
 import { deleteUrlRecord } from '../Apis/deleteUrlRecord'
-import dayjs from 'dayjs'
-const relativeTime = require('dayjs/plugin/relativeTime')
-dayjs.extend(relativeTime)
 
 const { useState, useEffect } = React
 
@@ -34,7 +32,6 @@ function UrlStats() {
 
   useEffect(() => {
     fetchData()
-    dayjs.extend(relativeTime)
   }, [])
 
   const fetchData = async () => {
@@ -102,7 +99,7 @@ function UrlStats() {
               <Descriptions.Item label='Key'>
                 {stats.shortKey}
               </Descriptions.Item>
-              <Descriptions.Item label='Created Date'>
+              <Descriptions.Item label='First Clicked Date'>
                 <Tooltip
                   placement='right'
                   title={dayjs(stats.createdAt).format('HH:mm A M/D/YYYY')}
@@ -113,7 +110,7 @@ function UrlStats() {
               <Descriptions.Item label='Clicks'>
                 {stats.clicks}
               </Descriptions.Item>
-              <Descriptions.Item label='Last Click Date'>
+              <Descriptions.Item label='Last Clicked Date'>
                 <Tooltip
                   placement='right'
                   title={dayjs(stats.updatedAt).format('HH:mm A M/D/YYYY')}
@@ -121,7 +118,7 @@ function UrlStats() {
                   {dayjs(stats.updatedAt).fromNow()}
                 </Tooltip>
               </Descriptions.Item>
-              <Descriptions.Item label='Last Click IP' span={2}>
+              <Descriptions.Item label='Last Clicked IP' span={2}>
                 {stats.ip}
               </Descriptions.Item>
               <Descriptions.Item>

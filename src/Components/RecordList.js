@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { getAllRecord } from '../Apis/getAllRecord'
-import { Row, Table, message, Tooltip, Statistic } from 'antd'
+import { Row, Table, message, Tooltip, Statistic, Typography } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
-const relativeTime = require('dayjs/plugin/relativeTime')
-dayjs.extend(relativeTime)
+import { getAllRecord } from '../Apis/getAllRecord'
 
 const { Countdown } = Statistic
 const { useState, useEffect } = React
+const { Text } = Typography
 
 function RecordList() {
   const [records, setRecords] = useState([])
@@ -31,7 +31,16 @@ function RecordList() {
       title: 'Key',
       dataIndex: 'shortKey',
       key: 'shortKey',
-      render: (text, row, index) => <Link to={'/' + text}>{text}</Link>
+      render: (text, row, index) => (
+        <>
+          {text}{' '}
+          <Tooltip title='More Details'>
+            <Link to={'/' + text}>
+              <InfoCircleOutlined />
+            </Link>
+          </Tooltip>
+        </>
+      )
     },
     {
       title: 'Shortened URL',
@@ -59,10 +68,18 @@ function RecordList() {
       key: 'expiration',
       render: (text, row, index) => (
         <div>
-          {text !== 0 ? (
+          {text === 0 ? (
+            <Text type='success'>forever</Text>
+          ) : dayjs(row.createdAt)
+              .add(text, 'day')
+              .isBefore(dayjs(new Date())) ? (
+            <Text type='danger'>expired</Text>
+          ) : (
             <Tooltip
               placement='topLeft'
-              title={dayjs(dayjs(row.createdAt).add(text, 'day')).format('HH:mm A M/D/YYYY')}
+              title={dayjs(dayjs(row.createdAt).add(text, 'day')).format(
+                'HH:mm A M/D/YYYY'
+              )}
             >
               <Countdown
                 title='expires in'
@@ -71,8 +88,6 @@ function RecordList() {
                 format='HH:mm:ss'
               />
             </Tooltip>
-          ) : (
-            'forever'
           )}
         </div>
       )
@@ -82,10 +97,7 @@ function RecordList() {
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (text, row, index) => (
-        <Tooltip
-          placement='top'
-          title={dayjs(text).format('HH:mm A M/D/YYYY')}
-        >
+        <Tooltip placement='top' title={dayjs(text).format('HH:mm A M/D/YYYY')}>
           {dayjs(text).fromNow()}
         </Tooltip>
       )
