@@ -37,19 +37,19 @@ function InputBox() {
 
   const onFinish = (data) => {
     setFormData(data)
-    postLongUrl(data.url)
+    postLongUrl(data)
       .catch(function (err) {
         message.error(err.message, 10)
       })
       .then((response) => {
-        if (response.status !== 200) {
-          message.error(`${response.data.err}`)
-        }
-
-        if (response.data) {
-          setShorten(response.data)
-          showDrawer()
-          message.success(`Submit success! ${response.data.message}`)
+        if (response.status === 200 || response.status === 201) {
+          if (response.data) {
+            setShorten(response.data)
+            showDrawer()
+            message.success(`Submit success! ${response.data.message}`)
+          } else {
+            message.error(`${response.data.message || response.data.err}`)
+          }
         }
       })
   }

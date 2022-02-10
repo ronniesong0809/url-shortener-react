@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-export function postLongUrl(url) {
+export function postLongUrl(data) {
   return axios.post(`${process.env.REACT_APP_BASEURL}/shorten`, {
-    url: url
+    url: data.url,
+    expiration: data.expiration
   })
 }

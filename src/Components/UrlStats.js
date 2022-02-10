@@ -1,10 +1,20 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Row, Space, Descriptions, message, Button } from 'antd'
-import { DeleteOutlined } from '@ant-design/icons'
-import DayJS from 'react-dayjs'
+import {
+  Row,
+  Space,
+  Descriptions,
+  message,
+  Button,
+  Tooltip,
+  Popconfirm
+} from 'antd'
+import { WarningOutlined, DeleteOutlined } from '@ant-design/icons'
 import { getUrlStats } from '../Apis/getUrlStats'
 import { deleteUrlRecord } from '../Apis/deleteUrlRecord'
+import dayjs from 'dayjs'
+const relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
 
 const { useState, useEffect } = React
 
@@ -12,9 +22,19 @@ function UrlStats() {
   const navigate = useNavigate()
   const [stats, setStats] = useState([])
   const [shortUrl, setShortUrl] = useState([])
+  const [visible, setVisible] = React.useState(false)
+
+  const showPopconfirm = () => {
+    setVisible(true)
+  }
+
+  const closePopconfirm = () => {
+    setVisible(false)
+  }
 
   useEffect(() => {
     fetchData()
+    dayjs.extend(relativeTime)
   }, [])
 
   const fetchData = async () => {
@@ -67,7 +87,7 @@ function UrlStats() {
             <Descriptions
               title={'[' + stats.shortKey + '] Stats'}
               bordered
-              column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}
+              column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 2 }}
             >
               <Descriptions.Item label='Short URL' span={2}>
                 <a
@@ -83,21 +103,45 @@ function UrlStats() {
                 {stats.shortKey}
               </Descriptions.Item>
               <Descriptions.Item label='Created Date'>
-                <DayJS format='HH:mm A M/d/YYYY'>{stats.createdAt}</DayJS>
+                <Tooltip
+                  placement='right'
+                  title={dayjs(stats.createdAt).format('HH:mm A M/D/YYYY')}
+                >
+                  {dayjs(stats.createdAt).fromNow()}
+                </Tooltip>
               </Descriptions.Item>
               <Descriptions.Item label='Clicks'>
                 {stats.clicks}
               </Descriptions.Item>
               <Descriptions.Item label='Last Click Date'>
-                <DayJS format='HH:mm A M/d/YYYY'>{stats.updatedAt}</DayJS>
+                <Tooltip
+                  placement='right'
+                  title={dayjs(stats.updatedAt).format('HH:mm A M/D/YYYY')}
+                >
+                  {dayjs(stats.updatedAt).fromNow()}
+                </Tooltip>
               </Descriptions.Item>
               <Descriptions.Item label='Last Click IP' span={2}>
                 {stats.ip}
               </Descriptions.Item>
               <Descriptions.Item>
-                <Button danger icon={<DeleteOutlined />} onClick={deleteUrl}>
-                  Delete
-                </Button>
+                <Popconfirm
+                  title='Are you sure you want to delete?'
+                  visible={visible}
+                  onConfirm={deleteUrl}
+                  onCancel={closePopconfirm}
+                  okText='Yes'
+                  cancelText='No'
+                  icon={<WarningOutlined style={{ color: 'red' }} />}
+                >
+                  <Button
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={showPopconfirm}
+                  >
+                    Delete
+                  </Button>
+                </Popconfirm>
               </Descriptions.Item>
             </Descriptions>
           </>
