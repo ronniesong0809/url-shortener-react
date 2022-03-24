@@ -1,9 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Row, Table, message, Tooltip, Statistic, Typography } from 'antd'
+import { Row, Statistic, Table, Tooltip, Typography, message } from 'antd'
+
 import { InfoCircleOutlined } from '@ant-design/icons'
-import { getAllRecord } from '../Apis/getAllRecord'
+import { Link } from 'react-router-dom'
+import React from 'react'
 import dayjs from 'dayjs'
+import { getAllRecord } from '../Apis/getAllRecord'
+
 const relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 
@@ -72,20 +74,20 @@ function RecordList() {
         <div>
           {text === 0 ? (
             <Text type='success'>forever</Text>
-          ) : dayjs(row.createdAt)
+          ) : dayjs(row.updatedAt)
               .add(text, 'day')
               .isBefore(dayjs(new Date())) ? (
             <Text type='danger'>expired</Text>
           ) : (
             <Tooltip
               placement='topLeft'
-              title={dayjs(dayjs(row.createdAt).add(text, 'day')).format(
+              title={dayjs(dayjs(row.updatedAt).add(text, 'day')).format(
                 'HH:mm A M/D/YYYY'
               )}
             >
               <Countdown
                 title='expires in'
-                value={dayjs(row.createdAt).add(text, 'day')}
+                value={dayjs(row.updatedAt).add(text, 'day')}
                 valueStyle={{ fontSize: '12px' }}
                 format='HH:mm:ss'
               />
@@ -95,9 +97,9 @@ function RecordList() {
       )
     },
     {
-      title: 'Created Date',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      title: 'Last Updated',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
       render: (text, row, index) => (
         <Tooltip placement='top' title={dayjs(text).format('HH:mm A M/D/YYYY')}>
           {dayjs(text).fromNow()}
